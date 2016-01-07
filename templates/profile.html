@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+{% block content %}
+
+<script>
+
+    $(document).ready(function() {
+
+        var likerarr = [];
+        var postarr = [];
+        var postsliked = [];
+        var postnotliked = [];
+
+
+        {% for liker in likers %}
+
+            likerarr.push("{{ liker.status.id }}");
+
+        {% endfor %}
+
+        {% for post in posts %}
+
+            postarr.push("{{ post.id }}");
+
+        {% endfor %}
+
+        likerarr.sort(function(a, b){return a-b});
+        postarr.sort(function(a, b){return a-b});
+
+
+        for (var i = 0; i < postarr.length; i++) {
+
+            if (likerarr.indexOf(postarr[i]) > -1) {
+
+                postsliked.push(postarr[i]);
+            } else {
+
+                postnotliked.push(postarr[i]);
+
+            }
+
+
+        }
+
+
+        for (i in postsliked) {
+
+            $("#like" + postsliked[i]).hide()
+
+
+        }
+
+        for (i in postnotliked) {
+
+            $("#dislike" + postnotliked[i]).hide()
+
+
+        }
+
+
+
+        javascriptfunction = function(element){
+
+
+            var catid;
+            catid = $(element).attr("data-catid");
+
+
+            $.get('/like/', {category_id: catid, button_type: element.name}, function (data) {
+                var likes = data.payload1;
+                var likers = data.payload2;
+
+                $("#databind" + catid).html(likes);
+
+                if (likers == 1) {
+
+                    document.getElementById('sound1').play()
+
+                    $("#like" + catid).hide()
+                    $("#dislike" + catid).show()
+                } else if (likers == 2) {
+
+                    $("#dislike" + catid).hide()
+                    $("#like" + catid).show()
+
+
+                }
+
+
+            });
+
+        }
+
+        javascriptfunction2 = function(element){
+
+            var catid;
+            catid = $(element).attr("data-catid");
+
+
+            $.get('/like/', {category_id: catid, button_type: element.name}, function (data) {
+
+                    $("#panel" + element.id).fadeOut()
+
+
+            });
+
+        }
+
+
+
+
+
+
+
+    });
+
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Are you sure you want to add {{ whichuser.first_name }} as a crush?</h4>
+      </div>
+      <div class="modal-body" style="height: 50px; padding: 20px;">
+          <span id="pokeadd" style="position: absolute; bottom: 10px; right: 10px;"><a href="{%  url "addcrush" whichuser.id %}" class="btn btn-default btn-md" style="margin-right: 20px; background: #5cb85c; color: white;">Add Crush</a></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Are you sure you want to wink at {{ whichuser.first_name }}? </h4>
+      </div>
+      <div class="modal-body" style="height: 50px; padding: 20px;">
+          <span id="pokeadd" style="position: absolute; bottom: 10px; right: 10px;"><a href="{% url "createwink" whichuser.id %}" class="btn btn-default btn-md" style="background: #4e304e; color: white;">Wink</a></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% if not switch %}
+<div class="row">
+{% endif %}
+{% if switch %}
+<div class="row" style="margin-bottom: 35px;">
+{% endif %}
+
+    <div class="col-md-12 col-sm-12 col-xs-12" id="test1">
+
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                {% if whichuser.gender == 'Male' %}
+                <img {% if whichuser.profileimage %}src="{{ whichuser.profileimage.url }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "200" height = "200" />
+                {% elif whichuser.gender == 'Female' %}
+                <img {% if whichuser.profileimage %}src="{{ whichuser.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "200" height = "200" />
+                {% endif %}
+
+
+                <h2 id="usernamefont">{{ whichuser.first_name }} {{ whichuser.last_name }}</h2>
+                {% if not switch %}
+                <form style="margin-top: 10px;" action="{% url 'edit_profilepicture' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
+                {{ profilepicform }}
+                <input  id='profilepicbutton' type="submit" value="Upload picture" />
+                </form>
+                {% endif %}
+                {%  if switch and not isprofilefriend %}
+                <span id="pokeadd" style="position: absolute; bottom: 0; right: 10px;"><button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#myModal" style="margin-right: 20px; background: cornflowerblue; color: white;">Add Crush</button><button class="btn btn-default btn-md" data-toggle="modal" data-target="#myModal2" style="background: #4e304e; color: white;">Wink</button></span>
+                {%  endif %}
+
+
+                {% if switch and isprofilefriend %}
+                <span id="pokeadd" style="position: absolute; bottom: 0; right: 10px;"><a href="{%  url "removecrush" whichuser.id %}" class="btn btn-default btn-md" style="margin-right: 20px; background: #5cb85c; color: white;"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{ whichuser.first_name }} is your crush</a><button class="btn btn-default btn-md" data-toggle="modal" data-target="#myModal2" style="background: #4e304e; color: white;">Wink</button></span>
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+        <div class="col-md-4 col-sm-4 col-xs-4">
+
+            <div id="details">
+
+               <ul id="detailslist">
+
+                    <li class="list"><span style="color: cornflowerblue;" class="glyphicon glyphicon-gift" aria-hidden="true"></span> Born: <span style="color:  #5cb85c;">{{ whichuser.date_of_birth }}</span> </li>
+                    <li class="list"><span style="color: chocolate;" class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Gender: <span style="color:  #5cb85c;">{{ whichuser.gender }}</span> </li>
+                    <li class="list"><span style="color: mediumseagreen;" class="glyphicon glyphicon-home" aria-hidden="true"></span>  Lives in <span style="color:  #5cb85c;"> {% if whichuser.living %} {{ whichuser.living }} {% endif %} </span> </li>
+                    <li class="list"><span style="color: indianred;" class="glyphicon glyphicon-education" aria-hidden="true"></span>  University: <span style="color:  #5cb85c;">{% if whichuser.university %} {{ whichuser.university }} {% endif %} </span> </li>
+                    <li class="list"><span style="color: crimson;" class="glyphicon glyphicon-heart" aria-hidden="true"></span>  Seeking: <span style="color:  #5cb85c;"> {% if whichuser.seeking %} {{ whichuser.seeking }} {% endif %} </span> </li>
+                    <li class="list"><span style="color: #ffac00;" class="glyphicon glyphicon-ok" aria-hidden="true"></span>  Likes: <span style="color:  #5cb85c;"> {% if whichuser.likes %} {{ whichuser.likes }} {% endif %} </span> </li>
+
+                </ul>
+
+
+            </div>
+
+            <div id="users">
+
+                <h5 style="color: cornflowerblue; font-family: Arial; margin-left: 15px; font-size: 12px;"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Crushes {{ online }}</h5>
+
+                <div style="margin-left: 15px;">
+
+                    {%  for crush in crushes  %}
+
+                        {% if crush.creator == whichuser %}
+
+                                  <a href="/profile/{{ crush.crush.id }}"><input data-toggle="tooltip" title="{{ crush.crush.first_name }} {{ crush.crush.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.crush.profileimage %}src="/media/{{ crush.crush.profileimage }}"{% else %} src="/media/images/default.jpg"  {% endif %} width = "50" height = "50"></a>
+
+                        {%  endif %}
+                        {% if crush.crush == whichuser  %}
+
+                                  <a href="/profile/{{ crush.creator.id }}"><input data-toggle="tooltip" title="{{ crush.creator.first_name }} {{ crush.creator.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.creator.profileimage %} src="/media/{{ crush.creator.profileimage }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "50" height = "50"></a>
+
+                        {%  endif %}
+
+
+
+                    {% endfor %}
+
+                    {%  if not switch and crushes.count == 0 %}
+
+                        <h5 style=" font-family: Arial; font-size: 12px; margin-top: 20px;"> You have no crushes yet</h5>
+
+
+
+                    {% endif %}
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+         <div class="col-md-8 col-sm-8 col-xs-8">
+
+
+             <div id="statuses">
+
+                {%  if not switch %}
+                <div id="statusinput">
+
+
+
+                    <form action="{% url 'profile' %}" method="post">{% csrf_token %}
+
+                        {{ statusform|as_bootstrap }}
+
+                    <button id="updatestatus" type="submit"> Fleek <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></button>
+
+
+                    </form>
+
+
+                </div>
+                {% endif %}
+
+
+                {% if isprofilefriend or not switch  %}
+                {%  for post in posts %}
+                    {% if not switch %}
+                    <div class="statuspanel" id="panel{{ post.id }}">
+                    {% endif %}
+
+                    {% if switch %}
+                    <div class="statuspanel" style="margin-top: 0; margin-bottom: 25px;" id="panel{{ post.id }}">
+                    {% endif %}
+
+
+                        <div class='statusbox'>
+                            {% if whichuser.gender == 'Male' %}
+                            <h3 id="author"><img style="margin-right: 10px;" {% if post.author.profileimage %}src="{{ post.author.profileimage.url }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "30" height = "30" /> {{ post.author.first_name }} {{ post.author.last_name }} <span style="margin-left: 150px;">{{ post.created_date }}</span> <span style="font-size: 20px; float: right">Score: <span id="databind{{ post.id }}">{{ post.likes }}</span></span></h3>
+                            {% endif %}
+                            {% if whichuser.gender == 'Female' %}
+                            <h3 id="author"><img style="margin-right: 10px;" {% if post.author.profileimage %}src="{{ post.author.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "30" height = "30" /> {{ post.author.first_name }} {{ post.author.last_name }} <span style="margin-left: 150px;">{{ post.created_date }}</span> <span style="font-size: 20px; float: right">Score: <b id="databind{{ post.id }}">{{ post.likes }}</b></span></h3>
+                            {% endif %}
+
+                            <p class="statustext">{{ post.content }}</p>
+
+
+                            {% if switch %}
+
+
+                                <button style="background-color: #5cb85c; color: white;" name="like" id="like{{ post.id }}" onclick="javascriptfunction(this)" data-catid="{{ post.id }}" class="likebutton btn btn-default btn-xs"> Like <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></button>
+
+
+                                <button style="background-color: #4e304e; color: white;" name="dislike" id ="dislike{{ post.id }}" onclick="javascriptfunction(this)" data-catid="{{ post.id }}" class=" dislikebutton btn btn-default btn-xs"> Unlike <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></button>
+
+
+                            {% endif %}
+                            {% if post.author == request.user %}
+
+                                <button style="background-color: #4e304e; color: white;" name="delete" id ="{{ post.id }}" onclick="javascriptfunction2(this)" data-catid="{{ post.id }}" class="btn btn-default btn-xs"> Delete <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {%  endfor %}
+
+
+                {%  if switch and not posts %}
+
+                    <div id="statuspanel" style="margin-top: 0; margin-bottom: 25px;">
+
+                        <div class='statusbox'>
+                            <p class = "statustext"> This user has no posts yet </p>
+
+
+                        </div>
+
+                    </div>
+
+
+                {% endif %}
+                {% endif %}
+
+                {%  if not switch and not posts %}
+
+                    <div id="statuspanel" style="margin-top: 20px; margin-bottom: 25px;">
+
+                        <div class='statusbox'>
+                            <p class = "statustext"> You have no posts yet </p>
+
+
+                        </div>
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+</div>
+
+
+{%  endblock %}

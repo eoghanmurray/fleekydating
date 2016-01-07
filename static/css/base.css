@@ -1,0 +1,163 @@
+body {
+
+    background: #ededed;
+    min-height: 100%;
+
+}
+
+.droplist {
+
+    font-size: 13px;
+    color: white;
+}
+
+
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+
+     background-color: inherit;
+}
+
+.navbar .navbar-nav .open .dropdown-menu {
+    position: absolute;
+    float: left;
+    background-color: #4e304e;
+    opacity: .9;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-width: 0 1px 1px;
+    border-radius: 0 0 4px 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    color: white;
+    background-color: inherit;
+}
+
+button:focus {
+
+    outline: none;
+
+}
+
+ul.dropdown-menu {
+
+    width: 100%;
+
+    min-width: 250px;
+}
+
+
+li.droplist {
+
+    width: 100%;
+
+
+}
+
+
+
+
+
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: white;
+}
+.navbar {
+
+    background: #4e304e;
+    border-bottom: #4e304e;
+    opacity: .9;
+
+}
+
+#footer {
+
+    height: 200px;
+    margin-top: 50px;
+
+}
+
+.navbar-default .navbar-brand {
+
+    color: white;
+    font-size: 25px;
+    font-family: Arial;
+    letter-spacing: 2px;
+
+}
+
+.navbar-default .navbar-nav>li>a {
+
+    color: white;
+
+}
+
+
+
+
+ul.nav.navbar-nav.navbar-right li {
+
+    margin-left: 10px;
+    margin-top: 10px;
+
+}
+
+.logininput {
+
+    border-radius: 3px;
+    border: none;
+    padding: 3px;
+    padding-left: 7px;
+    font-family: Arial;
+
+}
+
+#loginbutton {
+
+    margin-top: 5px;
+    color: white;
+    background: #59323c;
+    font-size: 11px;
+    font-family: Arial;
+    border: none;
+
+}
+
+
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: white;
+    background-color: transparent;
+}
+
+.navbar .navbar-nav .open .dropdown-menu > li > a:hover, .navbar .navbar-nav .open .dropdown-menu > li > a:focus, .navbar .navbar-nav .open .dropdown-menu > .active > a, .navbar .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: white !important;
+    background-color: inherit !important;
+}
+
+
+
+#loginbutton:focus {
+
+    outline: none;
+    box-shadow: none;
+
+}
+
+
+
+
+.navbar-default .navbar-toggle .icon-bar {
+
+    background-color: white;
+
+}
+
+
+
+
+
+
+

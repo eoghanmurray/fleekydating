@@ -1,0 +1,88 @@
+{%  extends "base.html" %}
+{% load bootstrap_tags %}
+
+{%  block content %}
+
+<style>
+
+    .list{
+
+        list-style: none;
+        font-size: 12px;
+    }
+
+    #cardname:hover {
+
+        color:  #5cb85c;
+
+    }
+
+
+</style>
+
+<div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        {% if users %}
+
+        <h4 style="text-align: center"> There are {{ number_users }} {% if whichuser.seeking == "Male" %} males {% else %} females {% endif %} in your area right now. </h4>
+
+        {% endif %}
+        {%  for  user in users  %}
+
+            <div class="col-md-3 col-sm-3 col-xs-3">
+
+                <div style="background-color: white; width: 180px; height: 400px; margin-top: 40px; padding: 20px;">
+                    <div style="text-align: center;">
+
+                        {% if user.gender == 'Male' %}
+                          <a href="/profile/{{ user.id }}"><input data-toggle="tooltip" title="{{ user.first_name }} {{ user.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if user.profileimage %}src="{{ user.profileimage.url }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "100" height = "100"></a>
+                        {% endif %}
+                        {% if user.gender == 'Female' %}
+                          <a href="/profile/{{ user.id }}"><input data-toggle="tooltip" title="{{ user.first_name }} {{ user.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if user.profileimage %}src="{{ user.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "100" height = "100"></a>
+                        {% endif %}
+
+                        <a href="/profile/{{ user.id }}" id="cardname" ><h4 style="color: #5cb85c">{{ user.first_name }} {{ user.last_name }}</h4></a>
+
+
+
+                    </div>
+
+                    <div style="padding-left: 20px;">
+
+                        <li class="list"><span style="color: cornflowerblue;" class="glyphicon glyphicon-gift" aria-hidden="true"></span> Born: <span style="color: #5cb85c;">{{ user.date_of_birth }}</span> </li>
+                        <li class="list"><span style="color: mediumseagreen;" class="glyphicon glyphicon-home" aria-hidden="true"></span>  Lives in <span style="color: #5cb85c;">{% if whichuser.living %} {{ user.living }} {% endif %}</span> </li>
+                        <li class="list"><span style="color: indianred;" class="glyphicon glyphicon-education" aria-hidden="true"></span>  University: <span style="color: #5cb85c;">{% if user.university %} {{ user.university }} {% endif %}</span> </li>
+                        <li class="list"><span style="color: #ffac00;" class="glyphicon glyphicon-ok" aria-hidden="true"></span>  Likes: <span style="color: #5cb85c;">{% if user.likes %} {{ user.likes }} {% endif %}</span></li>
+
+                    </div>
+
+
+                    <div style="text-align: center;">
+                        <li class="list"><span id="pokeadd"><a href="{%  url "addcrush2" user.id 1%}" class="btn btn-default btn-md" style="margin-right: 20px; background: #5cb85c; color: white;">Add Crush</a></span></li>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        {% endfor %}
+
+        {% if not users %}
+
+
+            <h4 style="text-align: center"> There are no new {{ user.seeking }}s in your area right now. Please try again later. </h4>
+
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+
+{%  endblock %}

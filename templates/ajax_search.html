@@ -1,0 +1,58 @@
+{% if results.count > 0 %}
+
+    <script>
+
+    $( document ).ready(function() {
+
+
+        $(navbar).click(function() {
+
+            $('#searchcont').hide();
+
+        });
+
+
+
+        $("#main_div").click(function() {
+
+            $('#searchcont').hide();
+
+        });
+
+
+
+
+    });
+
+
+
+
+    </script>
+
+
+    <style>
+
+    #searchdiv:hover {
+
+        background-color: #4e304e;
+        color: white;
+    }
+
+
+
+    </style>
+
+
+    <div id="searchcont"style="width: 100%; height: 100%; background-color: white;">
+
+            {% for result in results %}
+
+
+                    <li style="list-style: none; font-family: Arial; font-size: 12px;"><a href="/profile/{{result.id }}" style="text-decoration: none"><div id="searchdiv" style="width: 100%; padding: 10px; cursor: pointer;">{{ result.first_name }} {{ result.last_name }}</div></a></li>
+
+
+            {% endfor %}
+
+    </div>
+
+{% endif %}

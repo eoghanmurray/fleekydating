@@ -1,0 +1,67 @@
+
+
+#div_right {
+
+    padding: 20px;
+    margin-top: 20px;
+
+}
+
+#div_left {
+
+    padding: 20px;
+
+}
+
+input#id_email.form-control {
+
+    border: 1px solid #ccc;
+
+}
+
+input#id_email {
+
+    border-radius: 3px;
+    border: none;
+    padding: 3px;
+    padding-left: 10px;
+}
+
+input#id_password {
+
+    border-radius: 3px;
+    border: none;
+    padding: 3px;
+    padding-left: 10px;
+}
+
+#create_account_button {
+
+    background-color: #4e304e;
+    border-color: #4e304e;
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+
+}
+
+#register_caption {
+
+    color: black;
+}
+
+#span_account {
+
+    color: black;
+}
+
+#span_create {
+
+    color: #4e304e;
+}
+
+
+
+
+
+

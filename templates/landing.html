@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+
+{% block content %}
+
+
+<style>
+
+    body {
+
+    background: url("/media/images/snowlove.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    }
+
+
+
+    .col-md-4.col-sm-4.col-xs-4 {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        background-color: #eee;
+        background-color: rgba(86,61,124,.15);
+        border: 1px solid #ddd;
+        border: 1px solid rgba(86,61,124,.2);
+    }
+
+
+
+
+</style>
+
+<script>
+
+
+
+
+</script>
+
+<div class="grid">
+
+
+<div class="row" id="overlap">
+
+    <div class="col-md-5 col-sm-5 col-xs-5" id="div_left">
+
+
+
+
+    </div>
+
+
+
+    <div class="col-md-3 col-sm-3 col-xs-3" id="div_middle">
+
+    </div>
+
+
+
+
+    <div class="col-md-4 col-sm-4 col-xs-4" id="div_right">
+
+        {% if messages %}
+            <div class="alert alert-success" >
+                <div class="messages">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+
+
+        <h2 id="register_caption"> <span id="span_account">Need an account?</span> <span id="span_create"> Create </span> one here! </h2>
+
+        <form role="form" method="post" action="{% url 'register' %}">
+
+            {%  csrf_token %}
+            {{ form| as_bootstrap  }}
+            <button type="submit" class="btn btn-success" id="create_account_button">Get Fleeky!</button>
+
+        </form>
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+{%  endblock content %}
