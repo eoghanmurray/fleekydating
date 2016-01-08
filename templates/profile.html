@@ -107,6 +107,30 @@
         }
 
 
+        var g = new JustGage({
+            id: "gauge",
+            value: {{ fleekyvalue }},
+            min: 0,
+            max: 10,
+            title: "Fleeky Meter",
+            levelColorsGradient: false,
+            customSectors: [{
+                color : "skyblue",
+                lo : 0,
+                hi : 3
+              },{
+                color : "orange",
+                lo : 4,
+                hi : 7
+              },{
+                color : "#FF0000",
+                lo : 8,
+                hi : 11
+            }],
+            label: "Relationship gauge"
+        });
+
+
 
 
 
@@ -169,6 +193,8 @@
                 <img {% if whichuser.profileimage %}src="{{ whichuser.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "200" height = "200" />
                 {% endif %}
 
+                {% if switch and isprofilefriend %}<div id="gauge" class="200x160px" style="width:200px; height:160px; position: absolute; top: 0; right: 0;"></div>{% endif %}
+
 
                 <h2 id="usernamefont">{{ whichuser.first_name }} {{ whichuser.last_name }}</h2>
                 {% if not switch %}
@@ -183,8 +209,11 @@
 
 
                 {% if switch and isprofilefriend %}
-                <span id="pokeadd" style="position: absolute; bottom: 0; right: 10px;"><a href="{%  url "removecrush" whichuser.id %}" class="btn btn-default btn-md" style="margin-right: 20px; background: #5cb85c; color: white;"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{ whichuser.first_name }} is your crush</a><button class="btn btn-default btn-md" data-toggle="modal" data-target="#myModal2" style="background: #4e304e; color: white;">Wink</button></span>
+                <span id="pokeadd" style="position: absolute; bottom: 0; right: 10px;"><a href="{%  url "removecrush" whichuser.id %}" class="btn btn-default btn-md" style="margin-right: 20px; background: #5cb85c; color: white;"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{ whichuser.first_name }} is your crush</a>
+                <button class="btn btn-default btn-md" data-toggle="modal" data-target="#myModal2" style="background: #4e304e; color: white;">Wink</button>{% if unlock %}<button class="btn btn-default btn-md" style="background: #4e304e; color: white;">Take Quiz</button>{% endif %}</span>
                 {% endif %}
+
+
 
 
             </div>

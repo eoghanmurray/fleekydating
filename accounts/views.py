@@ -166,8 +166,14 @@ def edit_profilepicture(request):
 
 
 
+
+
 @login_required
 def profile(request, id=None):
+
+    unlock = False
+
+    fleekyvalue = 0
 
 
     #get everything that request.user has liked and if the status == to a liked status then change the html
@@ -202,6 +208,31 @@ def profile(request, id=None):
         #Queries the crush databse to check if the profile navigated to is already a friend or not.
         if Crush.objects.filter(creator=request.user, crush=whichuser) or Crush.objects.filter(creator=whichuser, crush=request.user):
 
+
+
+            #checks if the relationships points are >= 3. If true, it unlocks a new feature on the page.
+            if Crush.objects.filter(creator=request.user, crush=whichuser):
+
+                points1 = Crush.objects.get(creator=request.user, crush=whichuser)
+
+                fleekyvalue = points1.points
+
+                if points1.points >= 5:
+
+                    unlock = True
+
+            elif Crush.objects.filter(creator=whichuser, crush=request.user):
+
+                points2 = Crush.objects.get(creator=whichuser, crush=request.user)
+
+                fleekyvalue = points2.points
+
+                if points2.points >= 5:
+
+                    unlock = True
+
+
+
             isprofilefriend = True
 
         else:
@@ -224,7 +255,8 @@ def profile(request, id=None):
     statusform = StatusForm()
     profilepicform = ProfilePictureForm()
 
-    return render(request, 'profile.html', {'notifications':notifications, 'likers': likers, 'posts': posts, 'profilepicform': profilepicform, 'statusform': statusform, 'whichuser': whichuser, 'switch': switch, 'crushes': crushes, 'isprofilefriend': isprofilefriend})
+
+    return render(request, 'profile.html', {'fleekyvalue': fleekyvalue, 'unlock': unlock,'notifications':notifications, 'likers': likers, 'posts': posts, 'profilepicform': profilepicform, 'statusform': statusform, 'whichuser': whichuser, 'switch': switch, 'crushes': crushes, 'isprofilefriend': isprofilefriend})
 
 
 
@@ -261,6 +293,24 @@ def like(request):
                     likes.likes += 1
                     likes.save()
 
+                    #
+
+                    if Crush.objects.filter(creator=usercheck, crush=theuser) or Crush.objects.filter(creator=theuser, crush=usercheck):
+
+                        if Crush.objects.filter(creator=usercheck, crush=theuser):
+
+                            points = Crush.objects.get(creator=usercheck, crush=theuser)
+
+                            points.points += 1
+                            points.save()
+
+                        elif Crush.objects.filter(creator=theuser, crush=usercheck):
+
+                            points = Crush.objects.get(creator=theuser, crush=usercheck)
+
+                            points.points += 1
+                            points.save()
+
                 likers = Likers.objects.get(liker=request.user, status=likes)
 
                 print likers
@@ -295,6 +345,33 @@ def like(request):
 
 
             if Wink.objects.filter(Q(initiator=initiator, receiver=receiver) | Q(initiator=receiver, receiver=initiator)):
+
+
+
+                #increments the relationships points by 1 if a poke is returned after initiated
+                if Crush.objects.filter(creator=initiator, crush=receiver) or Crush.objects.filter(creator=receiver, crush=initiator):
+
+                    if Crush.objects.filter(creator=initiator, crush=receiver):
+
+                        points = Crush.objects.get(creator=initiator, crush=receiver)
+
+                        if points.points < 5:
+
+                            points.points += 1
+                            points.save()
+
+                    elif Crush.objects.filter(creator=receiver, crush=initiator):
+
+                        points = Crush.objects.get(creator=receiver, crush=initiator)
+
+                        if points.points <5:
+
+                            points.points += 1
+                            points.save()
+
+
+
+
 
                 a = Wink.objects.filter(Q(initiator=initiator, receiver=receiver) | Q(initiator=receiver, receiver=initiator))
 
@@ -585,53 +662,5 @@ def users(request):
 
 
     return render(request, 'users.html', {'number_users': number_users, 'whichuser': whichuser, 'users': users})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""def dislike(request, id):
-
-    usercheck = request.user
-    likes = Status.objects.get(id=id)
-
-
-    if usercheck != likes.author and not Dislikers.objects.filter(status=likes, disliker=usercheck).exists():
-
-        Dislikers.objects.create(status=likes, disliker=usercheck)
-        Likers.objects.filter(status=likes, liker=usercheck).delete()
-
-        if likes.likes < -2:
-
-            likes.delete()
-
-        else:
-
-            likes.likes -= 1
-            likes.save()
-
-        return redirect(profile, id=likes.author_id)
-
-    else:
-
-
-        return redirect(profile, id=likes.author_id)"""
 
 

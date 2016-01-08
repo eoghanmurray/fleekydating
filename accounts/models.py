@@ -88,6 +88,7 @@ class Crush(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     creator = models.ForeignKey(User, related_name="crush_creator_set")
     crush = models.ForeignKey(User, related_name="crush_set")
+    points = models.IntegerField(default=0)
 
 
 
