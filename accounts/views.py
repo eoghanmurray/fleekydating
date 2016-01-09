@@ -11,6 +11,7 @@ from django_mobile import set_flavour
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from django.db.models import Q
+from django.core.cache import cache
 from django.template import RequestContext
 import json
 User = get_user_model()
@@ -20,15 +21,11 @@ User = get_user_model()
 
 #Authentication#
 
-set_flavour('mobile')
-render_to_string('mobile.html')
+
 
 
 def register(request, register_form=UserRegistrationForm):
 
-    if request.flavour == 'mobile':
-
-        return render(request, 'mobile.html')
 
 
     if request.user.is_authenticated():
@@ -198,7 +195,14 @@ def profile(request, id=None):
     if id: #if navigating to another page
 
 
+
         whichuser = User.objects.get(pk=id)
+
+        whichuser.page_views += 1
+
+        whichuser.save()
+
+
         switch = True
         posts = Status.objects.filter(author_id=id).order_by('-created_date')
 

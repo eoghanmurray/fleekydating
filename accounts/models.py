@@ -64,6 +64,7 @@ class User(AbstractUser):
     university = models.CharField(max_length=8, choices=CHOICES3, null=True)
     likes = models.CharField(max_length=8, choices=CHOICES2, null=True)
     date_of_birth = models.DateField(default=datetime.date.today)
+    page_views = models.IntegerField(default=0)
 
 
     objects = AccountUserManager()

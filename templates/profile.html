@@ -193,6 +193,7 @@
                 <img {% if whichuser.profileimage %}src="{{ whichuser.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "200" height = "200" />
                 {% endif %}
 
+                <h3>Page views: {{ whichuser.page_views }}</h3>
                 {% if switch and isprofilefriend %}<div id="gauge" class="200x160px" style="width:200px; height:160px; position: absolute; top: 0; right: 0;"></div>{% endif %}
 
 
