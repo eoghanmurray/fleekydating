@@ -29,7 +29,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'accounts',
     'django_forms_bootstrap',
-    'django_mobile',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -41,16 +40,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django_mobile.middleware.MobileDetectionMiddleware',
-    'django_mobile.middleware.SetFlavourMiddleware',
 
 )
 
 ROOT_URLCONF = 'fleekydating.urls'
 
-TEMPLATE_LOADERS = (
-    'django_mobile.loader.Loader',
-)
 
 TEMPLATES = [
     {
@@ -60,7 +54,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django_mobile.context_processors.flavour',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',

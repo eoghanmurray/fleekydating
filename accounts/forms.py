@@ -8,12 +8,22 @@ class UserRegistrationForm(UserCreationForm):
     CHOICES=[('Male','Male'),
          ('Female','Female')]
 
+    CHOICES2=[('Female','Female'),
+         ('Male','Male')]
+
 
 
     gender = forms.ChoiceField(
 
         choices=CHOICES,
         label= 'Gender'
+
+    )
+
+    seeking = forms.ChoiceField(
+
+        choices=CHOICES2,
+        label= 'Seeking',
 
     )
 
@@ -54,7 +64,7 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
 
         model = User
-        fields = ['gender', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['gender', 'seeking', 'first_name', 'last_name', 'email', 'password1', 'password2']
         exclude = ['username']
 
 

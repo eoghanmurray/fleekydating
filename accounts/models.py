@@ -57,6 +57,8 @@ class User(AbstractUser):
                ('Limerick', 'Limerick'),]
 
     first_login = models.BooleanField(default=True)
+    first_feed = models.BooleanField(default=True)
+    first_otherprofile = models.BooleanField(default=True)
     profileimage = models.ImageField(upload_to='images', blank=True)
     gender = models.CharField(max_length=6, choices=CHOICES, null=True)
     seeking = models.CharField(max_length=6, choices=CHOICES, null=True)
@@ -73,6 +75,7 @@ class User(AbstractUser):
 class Status(models.Model):
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    wall = models.ForeignKey(User, related_name="status_wall_set", default=0)
     content = models.CharField(max_length=2000, blank=True, null=True)
     created_date = models.DateTimeField( default=timezone.now)
     published_date = models.DateTimeField( blank=True, null=True)

@@ -43,12 +43,12 @@
     </style>
 
 
-    <div id="searchcont"style="width: 100%; height: 100%; background-color: white;">
+    <div id="searchcont"style="width: 100%; height: 100%; background-color: white; max-height: 220px; overflow-y:auto;">
 
             {% for result in results %}
 
 
-                    <li style="list-style: none; font-family: Arial; font-size: 12px;"><a href="/profile/{{result.id }}" style="text-decoration: none"><div id="searchdiv" style="width: 100%; padding: 10px; cursor: pointer;">{{ result.first_name }} {{ result.last_name }}</div></a></li>
+                    <li style="list-style: none; font-family: Arial; font-size: 12px;"><a href="/profile/{{result.id }}" style="text-decoration: none"><div id="searchdiv" style="width: 100%; padding: 10px; cursor: pointer;"><img style="border-radius: 5px; margin-right: 20px;" {% if result.profileimage %}src="{{ result.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "34" height = "34" />{{ result.first_name }} {{ result.last_name }}</div></a></li>
 
 
             {% endfor %}

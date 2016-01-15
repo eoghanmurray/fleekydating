@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from .settings import MEDIA_ROOT
-from accounts.views import login, register, logout, profile, edit_profile, search_titles, edit_profilepicture, addcrush, removecrush, like, createwink, newsfeed, users
+from accounts.views import login, register, logout, profile, edit_profile, search_titles, edit_profilepicture, addcrush, removecrush, like, createwink, newsfeed, users, wall
 import settings
 from django.conf.urls.static import static
 
@@ -24,7 +24,10 @@ urlpatterns = [
 #Profile#
 
     url(r'^profile/$', profile, name='profile'),
+    url(r'^wall/(?P<id>\d+)/$', wall, name='wall'),
     url(r'^profile/(?P<id>\d+)/$', profile),
+    url(r'^profile/(?P<var>\d+)/$', profile),
+
     url(r'^profile/(?P<id>\d+)/(?P<id2>\d+)/$', profile),
     url(r'^editprofile/$', edit_profile, name='editprofile'),
     url(r'^editprofilepicture/$', edit_profilepicture, name='edit_profilepicture'),

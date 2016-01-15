@@ -6,12 +6,8 @@ from django.contrib.auth.decorators import login_required
 from models import Crush, Status, Likers, Wink, Notification
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django_mobile import set_flavour
-from django.contrib.sessions.models import Session
 from django.utils import timezone
 from django.db.models import Q
-from django.core.cache import cache
 from django.template import RequestContext
 import json
 User = get_user_model()
@@ -41,6 +37,7 @@ def register(request, register_form=UserRegistrationForm):
                 user = auth.authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
 
                 if user:
+
 
                     email = request.POST.get('email')
                     first = request.POST.get('first_name')
@@ -84,21 +81,10 @@ def login(request, success_url=None):
             if user is not None:
                 auth.login(request, user)
 
-                first_login = User.objects.filter(pk=request.user.id).values_list('first_login', flat=True)
 
-                user_first_login = first_login[0]
 
-                if user.date_joined.date() == user.last_login.date() and user_first_login:
 
-                    User.objects.filter(pk=request.user.id).update(first_login = False)
-
-                    Notification.objects.create(message="Welcome " + request.user.first_name + "!", user=request.user)
-
-                    return redirect(edit_profile)
-
-                else:
-
-                    return redirect(profile)
+                return redirect(profile)
 
             else:
                 messages.error(request, "Unable to log you in! Please try again.")
@@ -168,6 +154,29 @@ def edit_profilepicture(request):
 @login_required
 def profile(request, id=None):
 
+    sent = 2
+
+    first_login = User.objects.filter(pk=request.user.id).values_list('first_login', flat=True)
+
+    user_first_login = first_login[0]
+
+    if request.user.date_joined.date() == request.user.last_login.date() and user_first_login:
+
+
+        User.objects.filter(pk=request.user.id).update(first_login = False)
+
+        #Notification.objects.create(message="Welcome " + request.user.first_name + "!", user=request.user)
+
+        print '1'
+
+        first_time_login = 1
+
+    else:
+
+        print '2'
+
+        first_time_login = 2
+
     unlock = False
 
     fleekyvalue = 0
@@ -181,18 +190,35 @@ def profile(request, id=None):
 
 
 
+
+
     if request.method == "POST":
 
         form = StatusForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            post.wall = request.user
             print post.author
             post.save()
             return redirect(profile)
 
 
     if id: #if navigating to another page
+
+        first_otherprofile = User.objects.filter(pk=request.user.id).values_list('first_otherprofile', flat=True)
+
+
+        user_first_login2 = first_otherprofile[0]
+
+        if request.user.date_joined.date() == request.user.last_login.date() and user_first_login2:
+
+            User.objects.filter(pk=request.user.id).update(first_otherprofile = False)
+
+            first_time_login = 3
+
+
+        users = None
 
 
 
@@ -204,10 +230,14 @@ def profile(request, id=None):
 
 
         switch = True
-        posts = Status.objects.filter(author_id=id).order_by('-created_date')
+        posts = Status.objects.filter(Q(author_id=id) | Q(wall_id=id)).order_by('-created_date')
 
         #Queries a list of all the crushes of the users page navigated to and excludes to current authorised user
         crushes = Crush.objects.filter(Q(creator=whichuser) | Q(crush=whichuser)).exclude(Q(creator=request.user) | Q(crush=request.user)) #should be and?
+
+        if Wink.objects.filter(initiator=request.user, receiver=whichuser):
+
+            sent = 1
 
         #Queries the crush databse to check if the profile navigated to is already a friend or not.
         if Crush.objects.filter(creator=request.user, crush=whichuser) or Crush.objects.filter(creator=whichuser, crush=request.user):
@@ -245,23 +275,89 @@ def profile(request, id=None):
 
 
 
+
+
     else: #if navigating to users page
+
+        users = None
+
+
+        mycrushes = Crush.objects.filter(Q(creator=request.user) | Q(crush=request.user)).values_list('crush', flat=True)
+
+        mycrushes2 = Crush.objects.filter(Q(creator=request.user) | Q(crush=request.user)).values_list('creator', flat=True)
+
+
+        if request.user.seeking == None:
+
+            print '5'
+
+            users = User.objects.order_by('?').exclude(Q(id=request.user.id) | Q(id__in=mycrushes) | Q(id__in=mycrushes2))[:4] #potential to slow down server big time, find alternative to '?'
+
+
+
+
+        #Gay man seeking man
+        if request.user.seeking == 'Male' and request.user.gender == 'Male':
+
+            number_users = User.objects.filter(gender='Male').count()
+
+            users = User.objects.filter(Q(gender='Male') & Q(seeking='Male')).exclude(Q(id=request.user.id) | Q(id__in=mycrushes) | Q(id__in=mycrushes2))[:4]
+
+
+
+        #Straight man seeking woman
+        elif request.user.seeking == 'Female' and request.user.gender == 'Male':
+
+            number_users = User.objects.filter(gender='Female').count()
+
+            users = User.objects.filter(Q(gender='Female') & Q(seeking='Male')).exclude(Q(id=request.user.id) | Q(id__in=mycrushes) | Q(id__in=mycrushes2))[:4]
+
+
+        #Straight woman seeking man
+        elif request.user.seeking == 'Male' and request.user.gender == 'Female':
+
+            number_users = User.objects.filter(gender='Male').count()
+
+            users = User.objects.filter(Q(gender='Male') & Q(seeking='Female')).exclude(Q(id=request.user.id) | Q(id__in=mycrushes) | Q(id__in=mycrushes2))[:4]
+
+
+        #Gay woman seeking woman
+        elif request.user.seeking == 'Female' and request.user.gender == 'Female':
+
+            number_users = User.objects.filter(gender='Female').count()
+
+            users = User.objects.filter(Q(gender='Female') & Q(seeking='Female')).exclude(Q(id=request.user.id) | Q(id__in=mycrushes) | Q(id__in=mycrushes2))[:4]
 
 
 
 
         whichuser = request.user
         switch = False
-        crushes = Crush.objects.filter(Q(creator=whichuser) | Q(crush=whichuser))
+        crushes = Crush.objects.filter(Q(creator=whichuser) | Q(crush=whichuser)).order_by('-points')
         isprofilefriend = False
-        posts = Status.objects.filter(author_id=request.user).order_by('-created_date')
+        posts = Status.objects.filter(Q(author_id=request.user) | Q(wall_id=request.user)).order_by('-created_date')
 
     statusform = StatusForm()
     profilepicform = ProfilePictureForm()
 
 
-    return render(request, 'profile.html', {'fleekyvalue': fleekyvalue, 'unlock': unlock,'notifications':notifications, 'likers': likers, 'posts': posts, 'profilepicform': profilepicform, 'statusform': statusform, 'whichuser': whichuser, 'switch': switch, 'crushes': crushes, 'isprofilefriend': isprofilefriend})
+    return render(request, 'profile.html', {'sent': sent, 'first_time_login': first_time_login, 'users': users, 'fleekyvalue': fleekyvalue, 'unlock': unlock,'notifications':notifications, 'likers': likers, 'posts': posts, 'profilepicform': profilepicform, 'statusform': statusform, 'whichuser': whichuser, 'switch': switch, 'crushes': crushes, 'isprofilefriend': isprofilefriend})
 
+
+def wall(request, id):
+
+    whichuser = User.objects.get(pk=id)
+
+    if request.method == "POST":
+
+        form = StatusForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.wall = whichuser
+            print post.author
+            post.save()
+            return redirect(profile, id=id)
 
 
 
@@ -328,6 +424,24 @@ def like(request):
 
             elif whichbutton == 'dislike':
 
+                theuser = User.objects.get(pk=likes.author_id)
+
+                if Crush.objects.filter(creator=usercheck, crush=theuser) or Crush.objects.filter(creator=theuser, crush=usercheck):
+
+                        if Crush.objects.filter(creator=usercheck, crush=theuser):
+
+                            points = Crush.objects.get(creator=usercheck, crush=theuser)
+
+                            points.points -= 1
+                            points.save()
+
+                        elif Crush.objects.filter(creator=theuser, crush=usercheck):
+
+                            points = Crush.objects.get(creator=theuser, crush=usercheck)
+
+                            points.points -= 1
+                            points.save()
+
 
 
                 if usercheck != likes.author and Likers.objects.filter(status=likes, liker=usercheck).exists():
@@ -384,7 +498,7 @@ def like(request):
                 b = Wink.objects.create(initiator=initiator, receiver=receiver)
                 b.save()
 
-                Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " winked at you!", user=theuser)
+                #Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " winked at you!", user=theuser)
 
                 return HttpResponse()
 
@@ -393,7 +507,7 @@ def like(request):
 
                 a = Wink.objects.create(initiator=initiator, receiver=receiver)
                 a.save()
-                Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " winked at you!", user=theuser)
+                #Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " winked at you!", user=theuser)
 
                 return HttpResponse()
 
@@ -411,6 +525,21 @@ def like(request):
             Notification.objects.filter(pk=cat_id).update(viewed=True)
 
             return HttpResponse()
+
+        elif whichbutton == 'crush':
+
+            creator = request.user
+
+            #the friend is always the id
+            crush = User.objects.get(pk=cat_id)
+
+            newcrush = Crush.objects.create(creator=creator, crush=crush)
+            newcrush.save()
+
+            return HttpResponse()
+
+
+
 
 
 
@@ -432,9 +561,9 @@ def like(request):
 def search_titles(request):
 
 
-    crushes = Crush.objects.filter(Q(creator=request.user) | Q(crush=request.user)).values_list('crush', flat=True)
+    """crushes = Crush.objects.filter(Q(creator=request.user) | Q(crush=request.user)).values_list('crush', flat=True)
 
-    crushes2 = Crush.objects.filter(Q(creator=request.user) | Q(crush=request.user)).values_list('creator', flat=True)
+    crushes2 = Crush.objects.filter(Q(creator=request.user) | Q(crush=request.user)).values_list('creator', flat=True)"""
 
 
 
@@ -446,10 +575,12 @@ def search_titles(request):
 
         search_text = ''
 
+    users = User.objects.filter(first_name__contains=search_text).exclude(id=request.user.id)
 
 
 
-    #Gay man seeking man
+
+    """#Gay man seeking man
     if request.user.seeking == 'Male' and request.user.gender == 'Male':
 
         users = User.objects.filter(Q(first_name__contains=search_text) & Q(gender='Male') & Q(seeking='Male')).exclude(id=request.user.id)
@@ -471,7 +602,7 @@ def search_titles(request):
     #Gay woman seeking woman
     elif request.user.seeking == 'Female' and request.user.gender == 'Female':
 
-        users = User.objects.filter(Q(first_name__contains=search_text) & Q(gender='Female') & Q(seeking='Female')).exclude(id=request.user.id)
+        users = User.objects.filter(Q(first_name__contains=search_text) & Q(gender='Female') & Q(seeking='Female')).exclude(id=request.user.id)"""
 
 
 
@@ -582,6 +713,26 @@ def createwink(request, id, id2=None):
 
 def newsfeed(request):
 
+    first_feed = User.objects.filter(pk=request.user.id).values_list('first_feed', flat=True)
+
+    user_first_feed = first_feed[0]
+
+    if request.user.date_joined.date() == request.user.last_login.date() and user_first_feed:
+
+        User.objects.filter(pk=request.user.id).update(first_feed = False)
+
+        Notification.objects.create(message="All your notifictions will appear here! ", user=request.user)
+
+        print '1'
+
+        first_time_login = 1
+
+    else:
+
+        print '2'
+
+        first_time_login = 2
+
     likers = Likers.objects.filter(liker=request.user)
 
     whichuser = request.user
@@ -593,6 +744,7 @@ def newsfeed(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            post.wall = request.user
             print post.author
             post.save()
             return redirect(newsfeed)
@@ -608,11 +760,12 @@ def newsfeed(request):
 
     crushes2 = Crush.objects.filter(Q(creator=request.user) | Q(crush=request.user)).values_list('creator', flat=True)
 
-
+    crushcount = Crush.objects.filter(Q(creator=request.user) | Q(crush=request.user)).count()
+    statuscount = Status.objects.filter(author_id=request.user).count()
     posts = Status.objects.order_by('-created_date').filter(Q(author_id__in=crushes) | Q(author_id__in=crushes2) | Q(author_id=request.user))
 
 
-    return render(request, 'newsfeed.html', {'whichuser': whichuser, 'likers': likers, 'form': form, 'posts': posts, 'winks': winks})
+    return render(request, 'newsfeed.html', {'crushcount': crushcount, 'statuscount': statuscount ,'first_time_login': first_time_login,'whichuser': whichuser, 'likers': likers, 'form': form, 'posts': posts, 'winks': winks})
 
 
 
