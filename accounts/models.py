@@ -75,7 +75,7 @@ class User(AbstractUser):
 class Status(models.Model):
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    wall = models.ForeignKey(User, related_name="status_wall_set", default=0)
+    wall = models.ForeignKey(User, related_name="status_wall_set")
     content = models.CharField(max_length=2000, blank=True, null=True)
     created_date = models.DateTimeField( default=timezone.now)
     published_date = models.DateTimeField( blank=True, null=True)
