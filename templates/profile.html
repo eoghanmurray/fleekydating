@@ -281,7 +281,7 @@
                     {% if whichuser.gender == 'Male' %}
                     <img data-intro="{% if first_time_login == 1 %}Congratulations and welcome to Fleeky! Let's just run through a few things before we get you started! {% endif %}If you're looking for love, you need a profile picture! That means a picture of you, not you and friends." data-step="2" class="profileimage" {% if whichuser.profileimage %}src="{{ whichuser.profileimage.url }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "200" height = "200" />
                     {% elif whichuser.gender == 'Female' %}
-                    <img class="profileimage" {% if whichuser.profileimage %}src="{{ whichuser.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "200" height = "200" />
+                    <img data-intro="{% if first_time_login == 1 %}Congratulations and welcome to Fleeky! Let's just run through a few things before we get you started! {% endif %}If you're looking for love, you need a profile picture! That means a picture of you, not you and friends." data-step="2" class="profileimage" {% if whichuser.profileimage %}src="{{ whichuser.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "200" height = "200" />
                     {% endif %}
                 </div>
 
@@ -377,13 +377,26 @@
 
                         {% if crush.creator == whichuser %}
 
-                                  <a href="/profile/{{ crush.crush.id }}"><input style="border-radius: 5px;" data-toggle="tooltip" title="{{ crush.crush.first_name }} {{ crush.crush.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.crush.profileimage %}src="/media/{{ crush.crush.profileimage }}"{% else %} src="/media/images/default.jpg"  {% endif %} width = "56" height = "56"></a>
+                            {% if crush.crush.gender == 'Male' %}
+
+                                <a href="/profile/{{ crush.crush.id }}"><input style="border-radius: 5px;" data-toggle="tooltip" title="{{ crush.crush.first_name }} {{ crush.crush.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.crush.profileimage %}src="/media/{{ crush.crush.profileimage }}"{% else %} src="/media/images/default.jpg"  {% endif %} width = "56" height = "56"></a>
+                            {% else %}
+
+                                <a href="/profile/{{ crush.crush.id }}"><input style="border-radius: 5px;" data-toggle="tooltip" title="{{ crush.crush.first_name }} {{ crush.crush.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.crush.profileimage %}src="/media/{{ crush.crush.profileimage }}"{% else %} src="/media/images/girldefault.png"  {% endif %} width = "56" height = "56"></a>
+
+                            {% endif %}
 
                         {%  endif %}
                         {% if crush.crush == whichuser  %}
 
-                                  <a href="/profile/{{ crush.creator.id }}"><input style="border-radius: 5px;" data-toggle="tooltip" title="{{ crush.creator.first_name }} {{ crush.creator.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.creator.profileimage %} src="/media/{{ crush.creator.profileimage }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "56" height = "56"></a>
+                            {% if crush.crush.gender == 'Male' %}
 
+                                <a href="/profile/{{ crush.creator.id }}"><input style="border-radius: 5px;" data-toggle="tooltip" title="{{ crush.creator.first_name }} {{ crush.creator.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.creator.profileimage %} src="/media/{{ crush.creator.profileimage }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "56" height = "56"></a>
+                            {% else %}
+
+                                <a href="/profile/{{ crush.creator.id }}"><input style="border-radius: 5px;" data-toggle="tooltip" title="{{ crush.creator.first_name }} {{ crush.creator.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.creator.profileimage %} src="/media/{{ crush.creator.profileimage }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "56" height = "56"></a>
+
+                            {% endif %}
                         {%  endif %}
 
 

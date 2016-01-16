@@ -387,7 +387,7 @@ def like(request):
 
                     theuser = User.objects.get(pk=likes.author_id)
 
-                    Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " liked your fleek!", user=theuser)
+                    #Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " liked your fleek!", user=theuser)
                     Likers.objects.create(status=likes, liker=usercheck)
 
                     likes.likes += 1
@@ -618,7 +618,7 @@ def addcrush(request, id, id2=None):
     #the friend is always the id
     crush = User.objects.get(pk=id)
 
-    Notification.objects.create(message=creator.first_name + ' ' + creator.last_name + " added you as a crush!", user=crush)
+    #Notification.objects.create(message=creator.first_name + ' ' + creator.last_name + " added you as a crush!", user=crush)
 
     if Crush.objects.filter(creator=creator, crush=crush) or Crush.objects.filter(creator=crush, crush=creator) :
 
@@ -721,7 +721,7 @@ def newsfeed(request):
 
         User.objects.filter(pk=request.user.id).update(first_feed = False)
 
-        Notification.objects.create(message="All your notifictions will appear here! ", user=request.user)
+        #Notification.objects.create(message="All your notifictions will appear here! ", user=request.user)
 
         print '1'
 
