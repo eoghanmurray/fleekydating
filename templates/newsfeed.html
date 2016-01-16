@@ -241,8 +241,14 @@
 
                             <div class="col-md-2 col-sm-2 col-xs-2">
 
-                                <img style="border-radius: 5px; margin-left: 15px;" {% if post.author.profileimage %}src="{{ post.author.profileimage.url }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "68" height = "68" />
+                                {% if post.author.gender == 'Male' %}
 
+                                <img style="border-radius: 5px; margin-left: 15px;" {% if post.author.profileimage %}src="{{ post.author.profileimage.url }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "68" height = "68" />
+                                {% else %}
+
+                                <img style="border-radius: 5px; margin-left: 15px;" {% if post.author.profileimage %}src="{{ post.author.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "68" height = "68" />
+
+                                {% endif %}
                             </div>
 
                             <div class="col-md-9 col-sm-9 col-xs-9" style="margin-left: 20px;">
