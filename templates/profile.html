@@ -389,7 +389,7 @@
                         {%  endif %}
                         {% if crush.crush == whichuser  %}
 
-                            {% if crush.crush.gender == 'Male' %}
+                            {% if crush.crush.gender == 'Female' %}
 
                                 <a href="/profile/{{ crush.creator.id }}"><input style="border-radius: 5px;" data-toggle="tooltip" title="{{ crush.creator.first_name }} {{ crush.creator.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if crush.creator.profileimage %} src="/media/{{ crush.creator.profileimage }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "56" height = "56"></a>
                             {% else %}
