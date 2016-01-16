@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'u9ztscg$3a&$uw!l45n9c_(e5t4b+e*t9i)9dir69=2r6)sydf'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -69,8 +69,8 @@ WSGI_APPLICATION = 'fleekydating.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'newfleekydb',
-        'USER': 'newronan',
+        'NAME': 'fleekydb',
+        'USER': 'ronan',
         'PASSWORD': 'apple',
         'HOST': 'localhost',
         'PORT': '5432',
