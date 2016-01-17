@@ -387,7 +387,7 @@ def like(request):
 
                     theuser = User.objects.get(pk=likes.author_id)
 
-                    #Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " liked your fleek!", user=theuser)
+                    Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " liked your fleek!", user=theuser)
                     Likers.objects.create(status=likes, liker=usercheck)
 
                     likes.likes += 1
@@ -522,6 +522,8 @@ def like(request):
 
         elif whichbutton == 'markasread':
 
+            print "got to this point"
+
             Notification.objects.filter(pk=cat_id).update(viewed=True)
 
             return HttpResponse()
@@ -545,6 +547,42 @@ def like(request):
 
         payload = {'payload1': likes.likes, 'payload2': 2}
         return HttpResponse(json.dumps(payload), content_type='application/json')
+
+
+
+def fleekyvalue(request):
+
+    user_id = request.GET['user_id']
+
+    print "then user id is: " + user_id
+
+
+    notif = Notification.objects.filter(user_id=user_id).order_by('-id')[0]
+
+    if notif.viewed == False:
+
+        payload = {'message': notif.message, 'messageid': notif.id}
+
+        return HttpResponse(json.dumps(payload), content_type='application/json')
+
+    else:
+
+        payload = {'message': 1}
+        return HttpResponse(json.dumps(payload), content_type='application/json')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

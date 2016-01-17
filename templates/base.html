@@ -55,6 +55,12 @@
 
             });
 
+            /*$('#notifbind0').on('click', function(event){
+
+                $("#notifbind0").fadeOut();
+
+            });*/
+
 
             javascriptfunction5 = function(element){
 
@@ -74,6 +80,56 @@
                 $.get('/like/', {category_id: catid, button_type: element.name}, function (data) {
 
                         $("#message" + catid).fadeOut()
+
+
+                });
+
+            }
+
+            var fleek = {{ fleekyvalue }};
+
+
+            var userid = {{ request.user.id }};
+
+
+
+            setInterval(function(){
+
+                $.get('/fleekyvalue/',{user_id: userid}, function (data) {
+
+                       var message = data.message;
+                        var messageid = data.messageid;
+                        console.log("message id is: " + messageid);
+
+                        if (message != 1) {
+
+                            console.log(message);
+
+                            $("#notifbind").html(message);
+                            $('#dismissbutton').attr('data-catid', messageid);
+                            $("#notifbind0").fadeIn();                    /*function(){ $("#notifbind0").delay(8000).fadeOut(); });*/
+
+
+
+
+
+
+                        }
+
+                });
+
+            }, 10000);
+
+
+            javascriptfunction5 = function(element){
+
+                var catid;
+                catid = $(element).attr("data-catid");
+
+
+                $.get('/like/', {category_id: catid, button_type: element.name}, function (data) {
+
+                        $("#notifbind0").fadeOut()
 
 
                 });
@@ -183,7 +239,7 @@
 
 
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span {% if notifications %}style="color: cornflowerblue;"{% else %}style="color: white;"{% endif %} class="glyphicon glyphicon-bell" aria-hidden="true"></span></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span {% comment %}{% if notifications %}style="color: cornflowerblue;"{% else %}style="color: white;"{% endif %}{% endcomment %} class="glyphicon glyphicon-bell" aria-hidden="true"></span></a>
                                     <ul class="dropdown-menu">
 
 
@@ -193,12 +249,13 @@
 
                                         {% endif %}
 
-
+                                        {% comment %}
                                         {% for notification in notifications %}
 
-                                            <li id="message{{ notification.id }}" class="droplist"> <button style="background-color: inherit; border: none;" name="markasread" onclick="javascriptfunction3(this)" data-catid="{{ notification.id }}"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button> {{ notification.message }} </li>
+                                            <li id="message{{ notification.id }}" class="droplist"> <button style="background-color: inherit; border: none;" onclick="javascriptfunction3(this)" data-catid="{{ notification.id }}"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button> {{ notification.message }} </li>
 
                                         {% endfor %}
+                                        {% endcomment %}
 
                                     </ul>
                                 </li>
@@ -241,6 +298,31 @@
         <div class="col-md-12" id="footer">
 
             <footer>
+
+                <div id="notifbind0"  style="background-color: white; height: 50px; width: 300px; position: fixed; bottom: 30px; left: 30px; opacity: .8; border-radius: 5px; border: 1px solid skyblue; display: none;">
+
+                    <div class="row">
+
+                        <div class="col-md-2 col-sm-2 col-xs-2">
+
+                        </div>
+
+                        <div class="col-md-8 col-sm-8 col-xs-8" style="margin-top: 15px;">
+                            <p id="notifbind" style="color: skyblue; font-size: 14px;"></p>
+
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-2" style="text-align: right; margin-top: 5px;">
+                            <button id="dismissbutton" name="markasread" data-catid="" onclick="javascriptfunction5(this)" style="transform: translate(0, 0); color: skyblue; outline: none; margin-right: 30px; font-size: 10px; background: transparent; border: none;" class="glyphicon glyphicon-remove"></button>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
 
 
             </footer>
