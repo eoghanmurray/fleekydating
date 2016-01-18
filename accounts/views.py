@@ -357,6 +357,9 @@ def wall(request, id):
             post.wall = whichuser
             print post.author
             post.save()
+            Notification.objects.create(message=request.user.first_name + ' ' + request.user.last_name + " posted on your wall", user=whichuser)
+            #Notification.objects.create(message=creator.first_name + ' ' + creator.last_name + " added you!", user=crush)
+
             return redirect(profile, id=id)
 
 
@@ -498,7 +501,7 @@ def like(request):
                 b = Wink.objects.create(initiator=initiator, receiver=receiver)
                 b.save()
 
-                #Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " winked at you!", user=theuser)
+                Notification.objects.create(message=usercheck.first_name + ' ' + usercheck.last_name + " winked at you!", user=theuser)
 
                 return HttpResponse()
 
@@ -524,7 +527,9 @@ def like(request):
 
             print "got to this point"
 
-            Notification.objects.filter(pk=cat_id).update(viewed=True)
+            #Notification.objects.filter(pk=cat_id).update(viewed=True)
+
+            Notification.objects.filter(pk=cat_id).delete()
 
             return HttpResponse()
 
@@ -534,6 +539,8 @@ def like(request):
 
             #the friend is always the id
             crush = User.objects.get(pk=cat_id)
+
+            Notification.objects.create(message=creator.first_name + ' ' + creator.last_name + " added you!", user=crush)
 
             newcrush = Crush.objects.create(creator=creator, crush=crush)
             newcrush.save()
@@ -666,6 +673,9 @@ def addcrush(request, id, id2=None):
 
         newcrush = Crush.objects.create(creator=creator, crush=crush)
         newcrush.save()
+
+        Notification.objects.create(message=creator.first_name + ' ' + creator.last_name + " added you!", user=crush)
+
 
         if id2 != str(1):
 

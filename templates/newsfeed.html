@@ -162,15 +162,15 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-4" style="position: absolute; top: 160px; left: 30px;;">
 
-                        <h10 style="color: skyblue; font-size: 14px;">CRUSHES</h10>
-                        <p style="color: skyblue">{{ crushcount }}</p>
+                        <h10 style="color: #0084b4; font-size: 14px;">CRUSHES</h10>
+                        <p style="color: #0084b4;">{{ crushcount }}</p>
 
                     </div>
 
                     <div class="col-md-4 col-sm-4 col-xs-4" style="position: absolute; top: 160px; left: 120px;">
 
-                        <h10 style="color: skyblue; font-size: 14px;">FLEEKS</h10>
-                        <p style="color: skyblue">{{ statuscount }}</p>
+                        <h10 style="color: #0084b4; font-size: 14px;">FLEEKS</h10>
+                        <p style="color: #0084b4;">{{ statuscount }}</p>
 
                     </div>
 
@@ -255,11 +255,11 @@
 
 
                                 {% if post.wall == post.author %}
-                                {% if post.author != request.user %} <a style="color: skyblue; font-size: 16px;" href="/profile/{{ post.author.id }}">{{ post.author.first_name }} {{ post.author.last_name }} </a> {% else %} <a style="color: skyblue; font-size: 16px;" href="/profile/">{{ post.author.first_name }} {{ post.author.last_name }} </a>  {% endif %} <span style="color: skyblue; float: right;">{{ post.created_date.time }}</span>
+                                {% if post.author != request.user %} <a style="color: #0084b4; font-size: 16px;" href="/profile/{{ post.author.id }}">{{ post.author.first_name }} {{ post.author.last_name }} </a> {% else %} <a style="color: #0084b4; font-size: 16px;" href="/profile/">{{ post.author.first_name }} {{ post.author.last_name }} </a>  {% endif %} <span style="color: #0084b4; float: right;">{{ post.created_date.time }}</span>
                                 {% endif %}
 
                                 {% if post.wall != post.author %}
-                                {% if post.author != request.user %} <a style="color: skyblue; font-size: 16px;" href="/profile/{{ post.author.id }}">{{ post.author.first_name }} {{ post.author.last_name }} </a> {% else %} <a style="color: skyblue; font-size: 16px;" href="/profile/">{{ post.author.first_name }} {{ post.author.last_name }} </a>  {% endif %} <span style="color: skyblue;" class="glyphicon glyphicon-share-alt"></span> <a {% if post.wall != request.user %}href="/profile/{{ post.wall.id }}"{% else %}href="/profile/"{% endif %} style="color: skyblue; font-size: 16px;">{{ post.wall.first_name }} {{ post.wall.last_name }}</a> <span style="color: skyblue; float: right;">{{ post.created_date.time }}</span>
+                                {% if post.author != request.user %} <a style="color: #0084b4; font-size: 16px;" href="/profile/{{ post.author.id }}">{{ post.author.first_name }} {{ post.author.last_name }} </a> {% else %} <a style="color: #0084b4; font-size: 16px;" href="/profile/">{{ post.author.first_name }} {{ post.author.last_name }} </a>  {% endif %} <span style="color: #0084b4;" class="glyphicon glyphicon-share-alt"></span> <a {% if post.wall != request.user %}href="/profile/{{ post.wall.id }}"{% else %}href="/profile/"{% endif %} style="color: #0084b4; font-size: 16px;">{{ post.wall.first_name }} {{ post.wall.last_name }}</a> <span style="color: #0084b4; float: right;">{{ post.created_date.time }}</span>
                                 {% endif %}
 
                                 <!--<span style="color: skyblue;" class="glyphicon glyphicon-menu-right"></span>-->
@@ -287,12 +287,12 @@
 
                             {% if post.author == request.user %}
 
-                                <button style="font-size: 12px; outline: none; background: transparent; border: none; color: skyblue" name="delete" id ="{{ post.id }}" onclick="javascriptfunction2(this)" data-catid="{{ post.id }}" class="glyphicon glyphicon-trash"> </button>
+                                <button style="font-size: 12px; outline: none; background: transparent; border: none; color: #0084b4;" name="delete" id ="{{ post.id }}" onclick="javascriptfunction2(this)" data-catid="{{ post.id }}" class="glyphicon glyphicon-trash"> </button>
 
                             {% endif %}
 
                             {% if post.author != request.user %}
-                                <button style="transform: translate(0, 0); font-size: 12px; color: skyblue; outline: none; background: transparent; border: none;" name="like" id="like{{ post.id }}" onclick="javascriptfunction(this)" data-catid="{{ post.id }}" class="likebutton glyphicon glyphicon-heart"></button>
+                                <button style="transform: translate(0, 0); font-size: 12px; color: #0084b4; outline: none; background: transparent; border: none;" name="like" id="like{{ post.id }}" onclick="javascriptfunction(this)" data-catid="{{ post.id }}" class="likebutton glyphicon glyphicon-heart"></button>
 
 
                                 <button style="transform: translate(0, 0); font-size: 12px; color: red; outline: none; background: transparent; border: none;" name="dislike" id ="dislike{{ post.id }}" onclick="javascriptfunction(this)" data-catid="{{ post.id }}" class=" dislikebutton glyphicon glyphicon-heart"></button>
@@ -303,7 +303,7 @@
                             </div>
 
                             <div class="col-md-.5 col-sm-.5 col-xs-.5">
-                                <b style="color: skyblue; margin-left: -10px;" id="databind{{ post.id }}">{{ post.likes }}</b>
+                                <b style="color: #0084b4; margin-left: -10px;" id="databind{{ post.id }}">{{ post.likes }}</b>
                             </div>
 
 
@@ -345,7 +345,7 @@
 
             {% for wink in winks %}
 
-                    <li id="wink{{ wink.id }}" style="list-style: none; color: #48649f; font-family: Arial; margin-left: 20px; font-size: 14px; margin-bottom: 10px; margin-top: 5px;"> <button style="transform: translate(0, 0); font-size: 12px; color: skyblue; outline: none; background: transparent; border: none;" id="{{ wink.id }}" name="wink" onclick="javascriptfunction3(this)" data-catid="{{ wink.initiator.id }}" class="glyphicon glyphicon-eye-open"></button><span><a style="color: skyblue; font-size: 14px;" href="/profile/{{ wink.initiator.id }}">{{ wink.initiator.first_name }} {{ wink.initiator.last_name }}</a></span></li>
+                    <li id="wink{{ wink.id }}" style="list-style: none; color: #0084b4; font-family: Arial; margin-left: 20px; font-size: 14px; margin-bottom: 10px; margin-top: 5px;"> <button style="transform: translate(0, 0); font-size: 12px; color: #0084b4; outline: none; background: transparent; border: none;" id="{{ wink.id }}" name="wink" onclick="javascriptfunction3(this)" data-catid="{{ wink.initiator.id }}" class="glyphicon glyphicon-eye-open"></button><span><a style="color: #0084b4; font-size: 14px;" href="/profile/{{ wink.initiator.id }}">{{ wink.initiator.first_name }} {{ wink.initiator.last_name }}</a></span></li>
 
             {% endfor %}
 
@@ -353,7 +353,7 @@
 
             {% if not winks %}
 
-                    <h5 style="font-family: Arial; font-size: 12px; color: skyblue; text-align: center;">You have no Fleekicons</h5>
+                    <h5 style="font-family: Arial; font-size: 12px; color: #0084b4; text-align: center;">You have no Fleekicons</h5>
 
 
             {% endif %}

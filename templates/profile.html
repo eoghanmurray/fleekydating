@@ -317,7 +317,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
 
-                        <h3 style="text-align: center; color: skyblue;">{% if switch and not isprofilefriend %}<button data-toggle="modal" data-target="#myModal"  class="glyphicon glyphicon-plus" style="transform: translate(0, 0); color: yellowgreen; cursor: pointer; text-decoration: none; outline: none; background: transparent; border: none;"></button>{% endif %} {% if switch and isprofilefriend %}<button data-toggle="modal" data-target="#myModal2" class="glyphicon glyphicon-ok" style="transform: translate(0, 0); color: yellowgreen; cursor: pointer; text-decoration: none; outline: none; background: transparent; border: none;"></button>{% endif %} {{ whichuser.first_name }} {{ whichuser.last_name }}</h3>
+                        <h3 style="text-align: center; color: #0084b4;">{% if switch and not isprofilefriend %}<button data-toggle="modal" data-target="#myModal"  class="glyphicon glyphicon-plus" style="transform: translate(0, 0); color: yellowgreen; cursor: pointer; text-decoration: none; outline: none; background: transparent; border: none;"></button>{% endif %} {% if switch and isprofilefriend %}<button data-toggle="modal" data-target="#myModal2" class="glyphicon glyphicon-ok" style="transform: translate(0, 0); color: yellowgreen; cursor: pointer; text-decoration: none; outline: none; background: transparent; border: none;"></button>{% endif %} {{ whichuser.first_name }} {{ whichuser.last_name }}</h3>
                     </div>
 
 
@@ -328,23 +328,23 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-4" style=" text-align: center; font-size: 12px;">
 
-                        <h3><span style="color: skyblue;" class="dob glyphicon glyphicon-asterisk" aria-hidden="true"></span></h3>
-                        <p><span style="color:  skyblue;">{{ whichuser.gender }}</span></p>
+                        <h3><span style="color: #0084b4;" class="dob glyphicon glyphicon-asterisk" aria-hidden="true"></span></h3>
+                        <p><span style="color:  #0084b4;">{{ whichuser.gender }}</span></p>
 
 
                     </div>
 
                     <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center; font-size: 12px;">
 
-                        <h3 ><span style="color: skyblue;" class="dob glyphicon glyphicon-gift" aria-hidden="true"></span></h3>
-                        <p><span style="color:  skyblue;">{% if whichuser.date_of_birth %}{{ whichuser.date_of_birth }}{% endif %}</span></p>
+                        <h3 ><span style="color: #0084b4;" class="dob glyphicon glyphicon-gift" aria-hidden="true"></span></h3>
+                        <p><span style="color:  #0084b4;">{% if whichuser.date_of_birth %}{{ whichuser.date_of_birth }}{% endif %}</span></p>
 
                     </div>
 
                     <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center; font-size: 12px;">
 
-                        <h3><span style="color: skyblue;" class="dob glyphicon glyphicon-home" aria-hidden="true"></span></h3>
-                        <p><span style="color:  skyblue;">{% if whichuser.living %}{{ whichuser.living }}{% endif %}</span></p>
+                        <h3><span style="color: #0084b4;" class="dob glyphicon glyphicon-home" aria-hidden="true"></span></h3>
+                        <p><span style="color:  #0084b4;">{% if whichuser.living %}{{ whichuser.living }}{% endif %}</span></p>
 
 
                     </div>
@@ -357,8 +357,8 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center; font-size: 12px;">
 
-                        <h3><span style="color: skyblue;" class="dob glyphicon glyphicon-ok" aria-hidden="true"></span></h3>
-                        <p><span style="color:  skyblue;">{% if whichuser.likes %}{{ whichuser.likes }}{% endif %}</span></p>
+                        <h3><span style="color: #0084b4;" class="dob glyphicon glyphicon-ok" aria-hidden="true"></span></h3>
+                        <p><span style="color:  #0084b4;">{% if whichuser.likes %}{{ whichuser.likes }}{% endif %}</span></p>
 
 
                     </div>
@@ -367,8 +367,8 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center; font-size: 12px;">
 
-                        <h3><span style="color: skyblue;" class="dob glyphicon glyphicon-education" aria-hidden="true"></span></h3>
-                        <p><span style="color:  skyblue;">{% if whichuser.university %}{{ whichuser.university}}{% endif %}</span></p>
+                        <h3><span style="color: #0084b4;" class="dob glyphicon glyphicon-education" aria-hidden="true"></span></h3>
+                        <p><span style="color:  #0084b4;">{% if whichuser.university %}{{ whichuser.university}}{% endif %}</span></p>
 
                     </div>
 
@@ -376,8 +376,8 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center; font-size: 12px;">
 
-                        <h3><span style="color: skyblue;" class="dob glyphicon glyphicon-heart" aria-hidden="true"></span></h3>
-                        <p><span style="color:  skyblue;">{% if whichuser.seeking %}{{ whichuser.seeking }}{% endif %}</span></p>
+                        <h3><span style="color: #0084b4;" class="dob glyphicon glyphicon-heart" aria-hidden="true"></span></h3>
+                        <p><span style="color:  #0084b4;">{% if whichuser.seeking %}{{ whichuser.seeking }}{% endif %}</span></p>
 
                     </div>
 
@@ -529,10 +529,10 @@
 
 
                                 {% if post.wall == post.author %}
-                                {% if post.author != request.user %} <a style="color: skyblue; font-size: 16px;" href="/profile/{{ post.author.id }}">{{ post.author.first_name }} {{ post.author.last_name }} </a> {% else %} <a style="color: skyblue; font-size: 16px;" href="/profile/">{{ post.author.first_name }} {{ post.author.last_name }} </a>  {% endif %} <span style="color: skyblue; float: right;">{{ post.created_date }}</span>
+                                {% if post.author != request.user %} <a style="color: #0084b4; font-size: 16px;" href="/profile/{{ post.author.id }}">{{ post.author.first_name }} {{ post.author.last_name }} </a> {% else %} <a style="color: #0084b4; font-size: 16px;" href="/profile/">{{ post.author.first_name }} {{ post.author.last_name }} </a>  {% endif %} <span style="color: #0084b4; float: right;">{{ post.created_date }}</span>
                                 {% endif %}
                                 {% if post.wall != post.author %}
-                                {% if post.author != request.user %} <a style="color: skyblue; font-size: 16px;" href="/profile/{{ post.author.id }}">{{ post.author.first_name }} {{ post.author.last_name }} </a> {% else %} <a style="color: skyblue; font-size: 16px;" href="/profile/">{{ post.author.first_name }} {{ post.author.last_name }} </a>  {% endif %}  <span style="color: skyblue;" class="glyphicon glyphicon-share-alt"></span> <a {% if post.wall != request.user %}href="/profile/{{ post.wall.id }}"{% else %}href="/profile/"{% endif %} style="color: skyblue; font-size: 16px;">{{ post.wall.first_name }} {{ post.wall.last_name }}</a> <span style="color: skyblue; float: right;">{{ post.created_date.time }}</span>
+                                {% if post.author != request.user %} <a style="color: #0084b4; font-size: 16px;" href="/profile/{{ post.author.id }}">{{ post.author.first_name }} {{ post.author.last_name }} </a> {% else %} <a style="color: #0084b4; font-size: 16px;" href="/profile/">{{ post.author.first_name }} {{ post.author.last_name }} </a>  {% endif %}  <span style="color: #0084b4;" class="glyphicon glyphicon-share-alt"></span> <a {% if post.wall != request.user %}href="/profile/{{ post.wall.id }}"{% else %}href="/profile/"{% endif %} style="color: #0084b4; font-size: 16px;">{{ post.wall.first_name }} {{ post.wall.last_name }}</a> <span style="color: #0084b4; float: right;">{{ post.created_date.time }}</span>
                                 {% endif %}
                                 <p class="statustext" style="word-break: break-all;">{{ post.content }}</p>
 
@@ -557,12 +557,12 @@
 
                             {% if post.author == request.user %}
 
-                                <button style="font-size: 12px; outline: none; background: transparent; border: none; color: skyblue" name="delete" id ="{{ post.id }}" onclick="javascriptfunction2(this)" data-catid="{{ post.id }}" class="glyphicon glyphicon-trash"> </button>
+                                <button style="font-size: 12px; outline: none; background: transparent; border: none; color: #0084b4" name="delete" id ="{{ post.id }}" onclick="javascriptfunction2(this)" data-catid="{{ post.id }}" class="glyphicon glyphicon-trash"> </button>
 
                             {% endif %}
 
                             {% if post.author != request.user %}
-                                <button style="transform: translate(0, 0); font-size: 12px; color: skyblue; outline: none; background: transparent; border: none;" name="like" id="like{{ post.id }}" onclick="javascriptfunction(this)" data-catid="{{ post.id }}" class="likebutton glyphicon glyphicon-heart"></button>
+                                <button style="transform: translate(0, 0); font-size: 12px; color: #0084b4; outline: none; background: transparent; border: none;" name="like" id="like{{ post.id }}" onclick="javascriptfunction(this)" data-catid="{{ post.id }}" class="likebutton glyphicon glyphicon-heart"></button>
 
 
                                 <button style="transform: translate(0, 0); font-size: 12px; color: red; outline: none; background: transparent; border: none;" name="dislike" id ="dislike{{ post.id }}" onclick="javascriptfunction(this)" data-catid="{{ post.id }}" class=" dislikebutton glyphicon glyphicon-heart"></button>
@@ -573,7 +573,7 @@
                             </div>
 
                             <div class="col-md-.5 col-sm-.5 col-xs-.5">
-                                <b style="color: skyblue; margin-left: -10px;" id="databind{{ post.id }}">{{ post.likes }}</b>
+                                <b style="color: #0084b4; margin-left: -10px;" id="databind{{ post.id }}">{{ post.likes }}</b>
                             </div>
 
 
@@ -632,10 +632,10 @@
                 {% for user in users %}
 
                         {% if user.gender == 'Male' %}
-                              <li id="crush{{ user.id }}" style="list-style: none; text-align: center; margin-top: 15px;"><div class="row"><div class="col-md-6 col-sm-6 col-xs-6"><a href="/profile/{{ user.id }}"><input style="border-radius: 30px; margin-left: 40px;" data-toggle="tooltip" title="{{ user.first_name }} {{ user.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if user.profileimage %}src="{{ user.profileimage.url }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "60" height = "60"></a></div><div class="col-md-6 col-sm-6 col-xs-6"><button name="crush" onclick="javascriptfunction3(this)" data-catid="{{ user.id }}" style="transform: translate(0, 0); font-size: 22px; color: skyblue; outline: none; background: transparent; border: none; margin-right: 10px;" class="dob glyphicon glyphicon-plus"></button></div></div></li>
+                              <li id="crush{{ user.id }}" style="list-style: none; text-align: center; margin-top: 15px;"><div class="row"><div class="col-md-6 col-sm-6 col-xs-6"><a href="/profile/{{ user.id }}"><input style="border-radius: 30px; margin-left: 40px;" data-toggle="tooltip" title="{{ user.first_name }} {{ user.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if user.profileimage %}src="{{ user.profileimage.url }}"{% else %} src="/media/images/default.jpg" {% endif %} width = "60" height = "60"></a></div><div class="col-md-6 col-sm-6 col-xs-6"><button name="crush" onclick="javascriptfunction3(this)" data-catid="{{ user.id }}" style="transform: translate(0, 0); font-size: 22px; color: #0084b4; outline: none; background: transparent; border: none; margin-right: 10px;" class="dob glyphicon glyphicon-plus"></button></div></div></li>
                             {% endif %}
                             {% if user.gender == 'Female' %}
-                              <li id="crush{{ user.id }}" style="list-style: none; text-align: center; margin-top: 15px;"><div class="row"><div class="col-md-6 col-sm-6 col-xs-6"><a href="/profile/{{ user.id }}"><input style="border-radius: 30px; margin-left: 40px;" data-toggle="tooltip" title="{{ user.first_name }} {{ user.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if user.profileimage %}src="{{ user.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "60" height = "60"></a></div><div class="col-md-6 col-sm-6 col-xs-6"><button name="crush" onclick="javascriptfunction3(this)" data-catid="{{ user.id }}" style="transform: translate(0, 0); font-size: 22px; color: skyblue; outline: none; background: transparent; border: none; margin-right: 10px;" class="dob glyphicon glyphicon-plus"></button></div></div></li>
+                              <li id="crush{{ user.id }}" style="list-style: none; text-align: center; margin-top: 15px;"><div class="row"><div class="col-md-6 col-sm-6 col-xs-6"><a href="/profile/{{ user.id }}"><input style="border-radius: 30px; margin-left: 40px;" data-toggle="tooltip" title="{{ user.first_name }} {{ user.last_name }}" data-delay='{"show":"0", "hide":"0"}' type="image" {% if user.profileimage %}src="{{ user.profileimage.url }}"{% else %} src="/media/images/girldefault.png" {% endif %} width = "60" height = "60"></a></div><div class="col-md-6 col-sm-6 col-xs-6"><button name="crush" onclick="javascriptfunction3(this)" data-catid="{{ user.id }}" style="transform: translate(0, 0); font-size: 22px; color: #0084b4; outline: none; background: transparent; border: none; margin-right: 10px;" class="dob glyphicon glyphicon-plus"></button></div></div></li>
                         {% endif %}
 
 
@@ -644,7 +644,7 @@
 
             {% if not users and not switch %}
 
-                    <h5 style="font-family: Arial; font-size: 12px; color: skyblue; text-align: center;">You currently have no crush suggestions</h5>
+                    <h5 style="font-family: Arial; font-size: 12px; color: #0084b4; text-align: center;">You currently have no crush suggestions</h5>
 
 
             {% endif %}
@@ -670,14 +670,14 @@
                         {% endif %}
 
                         {% if switch and isprofilefriend %}
-                        <button id="primewink" name="wink" onclick="javascriptfunction4(this)" data-catid="{{ whichuser.id }}" style="transform: translate(0, 0); color: skyblue; outline: none; margin-left: 30px; background: transparent; font-size: 30px; border: none;" class="glyphicon glyphicon-eye-open"></button>
+                        <button id="primewink" name="wink" onclick="javascriptfunction4(this)" data-catid="{{ whichuser.id }}" style="transform: translate(0, 0); color: #0084b4; outline: none; margin-left: 30px; background: transparent; font-size: 30px; border: none;" class="glyphicon glyphicon-eye-open"></button>
                         {% endif %}
                     </div>
 
                     <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: center;">
 
                         {% if fleekyvalue >= 5 %}
-                        <button style="transform: translate(0, 0); color: skyblue; outline: none; margin-right: 30px; font-size: 30px; background: transparent; border: none;" class="glyphicon glyphicon-envelope"></button>
+                        <button style="transform: translate(0, 0); color: #0084b4; outline: none; margin-right: 30px; font-size: 30px; background: transparent; border: none;" class="glyphicon glyphicon-envelope"></button>
                         {% elif fleekyvalue < 5 %}
 
                         <button style="transform: translate(0, 0); color: gainsboro; outline: none; margin-right: 30px; font-size: 30px; background: transparent; border: none;" class="glyphicon glyphicon-lock"></button>
